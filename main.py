@@ -133,7 +133,7 @@ def insert_latex():
     if not is_running('inkscape-bin'):
         raise NotRunningException
 
-    buffer_path = '/tmp/latex-temp.text'
+    buffer_path = '/tmp/latex-temp.tex'
     Path(buffer_path).touch()
     args = [item for x in [("-e", l.strip())
                            for l in OPEN_VIM_BUFFER.split('\n')
@@ -141,6 +141,7 @@ def insert_latex():
     subprocess.run(["osascript"] + args)
     while os.stat(buffer_path).st_size == 0:
         sleep(0.01)
+
     subprocess.run("tmux kill-pane", shell=True)
     subprocess.run("osascript -e 'tell application \"System Events\" to tell \
                    process \"XQuartz\" to set frontmost to true'", shell=True)
