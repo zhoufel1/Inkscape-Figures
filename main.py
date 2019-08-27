@@ -10,6 +10,7 @@ import pyperclip
 from pathlib import Path
 from time import sleep
 
+
 TEMPLATE = os.path.dirname(os.path.realpath(__file__)) + '/template.svg'
 OPEN_VIM_BUFFER = '''
                   tell application "iTerm2"
@@ -54,8 +55,7 @@ def get_focused_desktop():
 
 
 def get_new_desktop():
-    query = get_json(['yabai', '-m', 'query', '--spaces'])
-    return len(query)
+    return len(get_json(['yabai', '-m', 'query', '--spaces']))
 
 
 def increment_file_copy(filename):
@@ -97,10 +97,8 @@ def is_running(process):
 
 
 def invoke_choose(path):
-    figures = [item for item in os.listdir(path)
-               if item[-4:] == '.svg']
-    options = ''.join(beautify_title(item) + '\n'
-                      for item in figures)
+    figures = [item for item in os.listdir(path) if item[-4:] == '.svg']
+    options = ''.join(beautify_title(item) + '\n' for item in figures)
     result, _ = subprocess.Popen(f'echo "{options}" | choose -c {BLUE}',
                                  shell=True,
                                  stdout=subprocess.PIPE).communicate()
