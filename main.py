@@ -11,7 +11,7 @@ from pathlib import Path
 from time import sleep
 
 
-TEMPLATE = os.path.dirname(os.path.realpath(__file__)) + '/template.svg'
+TEMPLATES = os.path.dirname(os.path.realpath(__file__)) + '/templates/'
 OPEN_VIM_BUFFER = '''
                   tell application "iTerm2"
                       set newWindow to (create window with default profile)
@@ -120,7 +120,7 @@ def create_figure(title, path):
         figure_path[2] = filename
 
     figure_path = ''.join(figure_path)
-    shutil.copyfile(TEMPLATE, figure_path)
+    shutil.copyfile(TEMPLATES + invoke_choose(TEMPLATES) + '.svg', figure_path)
     inkscape(figure_path)
     export_pdf(path + '/figures/')
     pyperclip.copy(filename)
